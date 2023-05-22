@@ -16,9 +16,10 @@ Arabic Automated Short Answers Grading System for **Moroccan History**, the ide
 **Tools :** FastAPI, GraphQL, Angular, Tailwindcss, Docker, Github, Scrapy, NLTK, Word2Vec.
 
 ## Table of contents
+
 [Scraping Data](#scraping-data)
 
-[Establishment of Arabic Natural Language Processing Pipeline](#establishment-of-arabic-natural-language-processing-pipeline)
+[Establishment of Arabic Natural language processing pipeline](#establishment-of-arabic-natural-language-processing-pipeline)
 
 [Exploratory data analysis (EDA)](#exploratory-data-analysis)
 * [Loading Data](#loading-data)
@@ -28,7 +29,7 @@ Arabic Automated Short Answers Grading System for **Moroccan History**, the ide
 [Data Pre-Preprocessing](#data-pre-preprocessing)
 * [Split Data](#split-data)
 
-[building Models](#building-models)
+[build Models](#build-models)
 * [Testing  Models](#testing-models)
 * [Saving The Best Model](#saving-the-best-model)
 
@@ -60,7 +61,7 @@ By involving high school students in our data collection process, we aimed to ga
 
 Our data collection efforts yielded the following results for each question:
 
-- First question: We successfully collected 200 responses.
+- First question: We successfully collected 140 responses.
 - Second question: We received 90 responses.
 - Third question: We obtained 90 responses.
 - Fourth question: We gathered 70 responses.
@@ -79,53 +80,40 @@ Google Forms
 
 [Moroccan History II](https://docs.google.com/forms/d/1ySQAQuFEVwdFJiWLnHFzaAP741XazPk3pj-_EYTqIG8)
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/10d886bc-a1fe-4373-b6df-54207ea0e8a1" >
-</p>
+![the answers to each question](images/Untitled.png)
 
-## Establishment of Arabic Natural Language Processing Pipeline
 
-**Pipeline** refers to a sequence of steps or processes that are applied successively to solve a specific problem. A machine learning pipeline is a series of operations that enable data processing, model training, and prediction on new data.
+## Establishment of Arabic Natural language processing pipeline
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/22f4c1b6-64a7-4f74-adca-073e12ba85a1" >
-</p>
+**pipeline** refers to a sequence of steps or processes that are applied successively to solve a specific problem. A machine learning pipeline is a series of operations that enable data processing, model training, and prediction on new data.
+
+![Untitled](images/Untitled%201.png)
 
 In our project, we approached each question as an individual model, treating them as separate entities. This approach allowed us to focus on the specific requirements and characteristics of each question and develop tailored solutions accordingly. I will now outline the process we followed for Question 1, which was repeated for the other questions as well.
 
-### Exploratory data analysis
+### Exploratory Data Analysis
 
 ### Loading Data
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/c47cc30a-3497-4106-9daa-06d0eeacdd5e" >
-</p>
+![Untitled](images/Untitled%202.png)
 
 ### Characteristics Of Dataset
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/2b505fed-6062-4fbe-962a-85af6c6a6aa1" >
-</p>
+![Untitled](images/Untitled%203.png)
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/0750327f-ef09-44df-991e-d342d5a07b38" >
-</p>
+![Untitled](images/Untitled%204.png)
+
+![dataset is balanced](images/Untitled%205.png)
 
 dataset is balanced
-
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/90f74db8-5192-495a-b78c-067d8cd70d78" >
-</p>
 
 ### Data Cleaning
 
 For data cleaning, we performed two essential tasks to ensure better performance for our model: removing duplicate values and handling null values.
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/79b41f53-fa69-4e71-8887-159777c9097f" >
-</p>
+![Untitled](images/Untitled%206.png)
 
-## Data Pre-Preprocessing
+### Data Pre-Preprocessing
 
 Data preprocessing is a crucial step in machine learning that involves preparing and transforming raw data into a suitable format for model training. It aims to improve the quality and usability of the data by addressing various issues such as missing values, outliers, inconsistencies, and irrelevant features. Data preprocessing plays a significant role in enhancing the performance and accuracy of machine learning models.
 
@@ -133,12 +121,10 @@ In our data processing pipeline, we utilized the **`nltk.tokenize`** module's **
 
 We utilized also  the **`gensim.models`** module's **`Word2Vec`** class for word embedding generation.
 
-```python
 def txt_preprocess(text):
 text = text.lower()
 tokens = word_tokenize(text)
 return tokens
-```
 
 ```python
 def txt_preprocess(text):
@@ -153,9 +139,7 @@ model_word2vec = Word2Vec(df['tokens'], vector_size=100, window=5, min_count=1, 
 
 the result was 
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/ecd3f85f-d907-4d3a-a66d-7b6b4b9db149" >
-</p>
+![Untitled](images/Untitled%207.png)
 
 ### Split Data
 
@@ -166,7 +150,7 @@ train_data = df.sample(frac=0.85, random_state=42)
 test_data = df.drop(train_data.index)
 ```
 
-## Building Models
+### build Models
 
 For the training phase, I employed multiple machine learning models to determine the best-performing one. The models I utilized for classification included Random Forest, SVM with a linear kernel, SVM with an RBF kernel, K-Nearest Neighbors (KNN), Naive Bayes, Decision Tree, Artificial Neural Network, and ensemble learning with bagging.
 
@@ -267,7 +251,7 @@ To select the best model, I relied on **accuracy** as a performance metric. Howe
 
 | quetions | accuracy | best model |
 | --- | --- | --- |
-| 1 | 0.8 | Decision Tree |
+| 1 | 0.8 | SVM RBF |
 | 2 | 0.9 | Naive Bayes |
 | 3 | 0.75 | Naive Bayes |
 | 4 | 0.77 | Random Forest |
@@ -280,9 +264,7 @@ To select the best model, I relied on **accuracy** as a performance metric. Howe
 
 ### Testing Models
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/b8e88474-3def-4602-86d4-a8bd0e6b0d07" >
-</p>
+![Untitled](images/Untitled%208.png)
 
 ### Saving The Best Model
 
@@ -301,19 +283,15 @@ with open(model_path, "rb") as file:
         model, model_word2vec = pickle.load(file)
 ```
 
-<p align="center">
-<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/91638100/860224d4-1885-4e12-9715-1f2307e69633" >
-</p>
+![Untitled](images/Untitled%209.png)
 
-## Backend of our Application
+## Backend of our application
 
 ### FastAPI
 
-For the backend we choose **FastAPI** framework because it’s fast to learn and to use.
+For the backend we choose **FastAPI** framework ****because it’s fast to learn and to use.
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/d54468fd-2ef0-42bf-bfe5-8afe5809d66e" >
-</p>
+![fastapi logo.png](images/fastapi_logo.png)
 
 First we create a virtual environment :
 
@@ -369,11 +347,9 @@ websockets==11.0.3
 
 To send request from the frontend to backend we used **GraphQL** a query language for APIs and a runtime for fulfilling those queries with the existing data.
 
-We implemented it in our application with the library **Strawberry.** It’s a new **GraphQL** library for Python 3, inspired by dataclasses.
+We implemented it in our application with the library ************Strawberry.************ It’s a new **GraphQL** library for Python 3, inspired by dataclasses.
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/1f22922e-4d1c-45d4-b640-2f0a0c262875" >
-</p>
+![Untitled](images/Untitled%2010.png)
 
 ### Docker Server Side
 
@@ -420,23 +396,21 @@ To build and run the application in **************Docker************** we used t
 docker-compose up
 ```
 
-<p align="center">
-	<img width="784" alt="1" src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/945ef6e1-eda8-4d27-90ea-21449c38d967">
-</p>
+ 
 
-## Frontend of our Application
+![Untitled](images/Untitled%2011.png)
+
+## Frontend of our application
 
 ### Angular
 
-For the frontend we choose **Angular** and **TailwindCSS** framework.
+For the frontend we choose **Angular** and ************************TailwindCSS************************ framework.
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/928f4b48-d7cb-4085-817d-6b8c9925a92b" >
-</p>
+![anguar logo.png](images/anguar_logo.png)
 
 ### GraphQL Client Side
 
-To use **GraphQL** in the client side we needed also to download a library called `apollo-angular` so we did using this command :
+To use **************GraphQL************** in the client side we needed also to download a library called `apollo-angular` so we did using this command :
 
 ```
 ng add apollo-angular
@@ -470,15 +444,13 @@ FROM nginx:alpine
 COPY --from=build /app/dist/answers-grading-system-frontend /usr/share/nginx/html
 ```
 
-To build the application in **Docker** we use the following command :
+To build the application in **************Docker************** we use the following command :
 
 ```
 docker build --tag answers-grading-system-frontend .
 ```
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/b25dfdbf-2cc8-4ad5-a154-da48f5682c50">
-</p>
+![Untitled](images/Untitled%2012.png)
 
 To run it we used :
 
@@ -486,34 +458,25 @@ To run it we used :
 docker run -d -p 4200:80 --name answers-grading-system-frontend answers-grading-system-frontend
 ```
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/863902ae-ae4e-41b9-a757-80468e01fb14">
-</p>
+![Untitled](images/Untitled%2013.png)
 
 ## Testing the Application
 
 ### Home Page
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/addc9069-e54d-430c-886c-1b4457fcdd68" >
-</p>
+![Untitled](images/Untitled%2014.png)
 
 ### Question Page
 
-By clicking on the button **ابدأ الاختبار** the test will begin :
+By clicking on the button ****ابدأ الاختبار**** the test will begin :
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/e1245bcb-83b7-4bf6-bd7a-cb51f93ac28d" >
-</p>
-
+![Untitled](images/Untitled%2015.png)
 
 ### Result Page
 
-By clicking on the button **عرض النتيجة** the grades given by the models we trained will showed with the correct answers :
+By clicking on the button ****عرض النتيجة**** the grades given by the models we trained will showed with the correct answers :
 
-<p align="center">
-	<img src="https://github.com/ahmed-bentajhamyani/answers-grading-system-application/assets/101653735/de0a49c4-c2b2-4598-bb8b-e1bfcc7bff54" >
-</p>
+![Untitled](images/Untitled%2016.png)
 
 ## Creators
 
